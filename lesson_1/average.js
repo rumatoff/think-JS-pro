@@ -2,7 +2,7 @@
 
 "use strict";
 
-let text = {
+const text = {
     title: "Введите число",
     result: "Среднее арифметическое: ",
     length: "Количество чисел: ",

@@ -2,7 +2,7 @@
 
 "use strict";
 
-let text = {
+const text = {
     title: "Введите текст:",
     result: "Количество букв: ",
     vowels: "гласнных - ",
@@ -10,9 +10,9 @@ let text = {
     error: "Текст должен содержать хотябы одну букву"
 };
 let incomingText = prompt(text.title, "");
-let letters = /[a-zA-Z]+/g;
-let vowels = /[aeiou]/gi;
-let consonants = /(?![aeiou])[a-z]/gi;
+const letters = /[a-zA-Z]+/g;
+const vowels = /[aeiou]/gi;
+const consonants = /(?![aeiou])[a-z]/gi;
 
 const countVowels = incomingText => (incomingText.match(vowels) || []).length;
 const countConsonants = incomingText => (incomingText.match(consonants) || []).length;

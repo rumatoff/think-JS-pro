@@ -2,14 +2,14 @@
 
 "use strict";
 
-let text = {
+const text = {
     title: "Введите дату в американском формате:",
     result: "Дата в европейском формате: ",
     error: "Дата введена неверно"
 };
 let monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-let americanDateFormat = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+const americanDateFormat = /^(0?[1-9]|1[012])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
 
 let inputDate = prompt(text.title, "");
 

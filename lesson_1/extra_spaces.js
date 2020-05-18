@@ -2,14 +2,14 @@
 
 "use strict";
 
-let text = {
+const text = {
     title: "Введите текст:",
     result: "Текст без лишних пробелов: ",
     error: "Текст должен содержать двойной пробел"
 };
 
-let extraSpaces = /\s\s/gi;
-let space = " ";
+const extraSpaces = /\s\s/gi;
+const space = " ";
 let incomingText = prompt(text.title, "");
 
 function formatText(formattedText) {

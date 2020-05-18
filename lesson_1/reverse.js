@@ -2,7 +2,7 @@
 
 "use strict";
 
-let text = {
+const text = {
     title: "Введите строку:",
     result: "Результат: ",
     error: "Введена пустая строка"
