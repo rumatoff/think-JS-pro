@@ -28,12 +28,8 @@ function isValidDate(date) {
     return date.dd <= monthLength[date.mm - 1];
 }
 
-function leadZero(n) {
-    return (n < 10) ? "0" + n : n;
-}
-
 function dateFormat(date) {
-    return leadZero(date.dd) + "/" + leadZero(date.mm) + "/" + date.yy;
+    return date.dd.padStart(2, "0") + "/" + date.mm.padStart(2, "0") + "/" + date.yy;
 }
 
 let message = text.error;
