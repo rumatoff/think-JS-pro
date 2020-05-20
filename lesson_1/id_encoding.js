@@ -7,16 +7,13 @@ const text = {
     result: "Закодированный ID: ",
     error: "ID должен быть десятичным целым числом"
 };
-const timestamp = Date.now();
-const cluster = 1;
-const type = 2;
 let id = Number(prompt(text.title, ""));
 
 function timestampInSeconds(timestamp) {
     return Math.floor(timestamp / 1000);
 }
 
-function encodeID() {
+function encodeID(timestamp, cluster, type, id) {
     const timestamp16 = timestampInSeconds(timestamp).toString(16).padStart(8, "0");
     const cluster16 = cluster.toString(16).padStart(2, "0");
     const type16 = type.toString(16);
@@ -24,5 +21,5 @@ function encodeID() {
     return timestamp16 + cluster16 + type16 + id16;
 }
 
-const message = (id > 0) ? text.result + encodeID().toUpperCase() : text.error;
+const message = (id > 0) ? text.result + encodeID(Date.now(), 1, 2, id).toUpperCase() : text.error;
 alert(message);
