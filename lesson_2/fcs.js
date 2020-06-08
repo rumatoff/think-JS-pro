@@ -15,8 +15,8 @@ let flights = {
         name: "BH118",
         seats: 28,
         businessSeats: 4,
-        registrationStarts: makeTime(10, 0),
-        registartionEnds: makeTime(15, 0),
+        registrationStarts: makeTime(12, 0),
+        registartionEnds: makeTime(17, 0),
         tickets: [
             {
                 id: "BH118-B50",
@@ -140,6 +140,7 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
     }
 
     flight.tickets.push(ticket);
+    // console.log(flight.tickets);
 
     // return Object.assign({}, ticket);
     return {
@@ -166,4 +167,42 @@ function flightDetails(flightName) {
 
     console.table(flight);
     console.table(flight.tickets);
+}
+
+/**
+ Функция пробует произвести электронную регистрацию пассажира
+ проверка билета
+ проверка данных пассажира
+ электронную регистрацию можно произвести только в период от 5 до 1 часа до полета
+ @param {string} ticketId номер билета
+ @param {string} fullName имя пассажира
+ @param {number} nowTime текущее время
+ @returns boolean успешна ли регистрация
+ */
+function eRegistration(ticketId, fullName, nowTime) {
+    const ticketFlight = ticketId.split("-", 1)[0];
+    const flight = flights[ticketFlight];
+    if (!flight) {
+        console.warn("Flight not found");
+        return;
+    }
+
+    const ticketIndex = flight.tickets.findIndex((ticket => ticket.id === ticketId))
+    if (ticketIndex < 0) {
+        console.warn("Ticket not found");
+        return;
+    }
+
+    const ticket = flight.tickets[ticketIndex];
+    if (!(ticket.fullName === fullName)) {
+        console.warn("Passenger not found");
+        return;
+    }
+
+    if (!(nowTime > flight.registrationStarts && nowTime < flight.registartionEnds)) {
+        console.warn("Registration is not possible");
+        return;
+    }
+    ticket.registrationTime = nowTime;
+    return true;
 }
