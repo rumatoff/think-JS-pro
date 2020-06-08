@@ -16,7 +16,7 @@ let flights = {
         seats: 28,
         businessSeats: 4,
         registrationStarts: makeTime(12, 0),
-        registartionEnds: makeTime(17, 0),
+        registrationEnds: makeTime(17, 0),
         tickets: [
             {
                 id: "BH118-B50",
@@ -113,7 +113,7 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
     if (flight.tickets.length >= flight.seats)
         throw new Error("No seats available");
 
-    if (buyTime > flight.registartionEnds)
+    if (buyTime > flight.registrationEnds)
         throw new Error("Time away");
 
     const seat = findAvailableSeat(flight, type);
@@ -169,6 +169,10 @@ function flightDetails(flightName) {
     console.table(flight.tickets);
 }
 
+function isRegistrationAvailable(registrationStarts, registrationEnds, nowTime) {
+    return nowTime > registrationStarts && nowTime < registrationEnds;
+}
+
 /**
  Функция пробует произвести электронную регистрацию пассажира
  проверка билета
@@ -199,10 +203,50 @@ function eRegistration(ticketId, fullName, nowTime) {
         return;
     }
 
-    if (!(nowTime > flight.registrationStarts && nowTime < flight.registartionEnds)) {
+    if (!isRegistrationAvailable(flight.registrationStarts, flight.registrationEnds, nowTime)) {
         console.warn("Registration is not possible");
         return;
     }
     ticket.registrationTime = nowTime;
     return true;
+}
+
+/**
+ Отчет о рейсе на данный момент
+ @typedef {Object} Report
+ @property {string} flight Номер рейса
+ @property {boolean} registration Доступна регистрация на самолет
+ @property {boolean} complete Регистрация завершена или самолет улетел
+ @property {number} countOfSeats Общее количество мест
+ @property {number} reservedSeats Количество купленных (забронированных) мест
+ @property {number} registeredSeats Количество пассажиров, прошедших регистрацию
+ */
+/**
+ Функция генерации отчета по рейсу
+ проверка рейса
+ подсчет
+ @param {string} flightId номер рейса
+ @param {number} nowTime текущее время
+ @returns {Report} отчет
+ */
+function flightReport(flightId, nowTime) {
+    const flight = flights[flightId];
+
+    if (!flight) {
+        throw new Error("Flight not found");
+    }
+    let registeredSeats = 0;
+    flight.tickets.forEach((ticket) => {
+        if(ticket.registrationTime)
+            registeredSeats++;
+    })
+    let report = {
+        name: flight.name,
+        registration: isRegistrationAvailable(flight.registrationStarts, flight.registrationEnds, nowTime),
+        complete: nowTime > flight.registrationEnds,
+        countOfSeats: parseInt(flight.seats) + parseInt(flight.businessSeats),
+        reservedSeats: flight.tickets.length,
+        registeredSeats: registeredSeats,
+    };
+    return report;
 }
