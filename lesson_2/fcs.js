@@ -241,7 +241,7 @@ function flightReport(flightId, nowTime) {
             registeredSeats++;
     })
     let report = {
-        name: flight.name,
+        flight: flight.name,
         registration: isRegistrationAvailable(flight.registrationStarts, flight.registrationEnds, nowTime),
         complete: nowTime > flight.registrationEnds,
         countOfSeats: parseInt(flight.seats) + parseInt(flight.businessSeats),
