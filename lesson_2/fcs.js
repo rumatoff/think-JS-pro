@@ -198,8 +198,13 @@ function eRegistration(ticketId, fullName, nowTime) {
     }
 
     const ticket = flight.tickets[ticketIndex];
-    if (!(ticket.fullName === fullName)) {
+    if (ticket.fullName !== fullName) {
         console.warn("Passenger not found");
+        return;
+    }
+
+    if (ticket.registrationTime) {
+        console.warn("Already registered");
         return;
     }
 
@@ -240,7 +245,7 @@ function flightReport(flightId, nowTime) {
         if(ticket.registrationTime)
             registeredSeats++;
     })
-    let report = {
+    return {
         flight: flight.name,
         registration: isRegistrationAvailable(flight.registrationStarts, flight.registrationEnds, nowTime),
         complete: nowTime > flight.registrationEnds,
@@ -248,5 +253,4 @@ function flightReport(flightId, nowTime) {
         reservedSeats: flight.tickets.length,
         registeredSeats: registeredSeats,
     };
-    return report;
 }
