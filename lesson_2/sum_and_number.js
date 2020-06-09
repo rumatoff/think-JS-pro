@@ -15,7 +15,7 @@ function sumAndNumber(array) {
         count: array.length,
         sum: array.reduce(function (a, b) {
             return a + b;
-        })
+        }, 0)
     };
 }
 console.log(sumAndNumber(getNegative(arr)));
