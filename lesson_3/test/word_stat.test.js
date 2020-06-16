@@ -30,3 +30,21 @@ describe("wordStat", function () {
         assert.deepEqual(result, [{word: "", sum: 0}]);
     });
 });
+describe("charsSum", function () {
+    it("correct chars", function () {
+        const result = charsSum([100, 101, 102]);
+        assert.deepEqual(result, 303);
+    });
+    it("one char", function () {
+        const result = charsSum([100]);
+        assert.deepEqual(result, 100);
+    });
+    it("zero char", function () {
+        const result = charsSum([0]);
+        assert.deepEqual(result, 0);
+    });
+    it("empty char", function () {
+        const result = charsSum([]);
+        assert.deepEqual(result, 0);
+    });
+});
